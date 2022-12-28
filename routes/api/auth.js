@@ -4,7 +4,11 @@ const router = express.Router();
 
 const auth = require("../../controllers/auth");
 
-const { validateBody, authenticate } = require("../../middlewares");
+const {
+  validateBody,
+  validateParams,
+  authenticate,
+} = require("../../middlewares");
 
 const { controllerWrapper } = require("../../helpers");
 
@@ -12,6 +16,7 @@ const {
   registerUserSchema,
   loginUserSchema,
   updateUserSchema,
+  verifyUserSchema,
 } = require("../../schemas");
 
 router.post(
@@ -35,6 +40,18 @@ router.post(
   authenticate,
   validateBody(updateUserSchema),
   controllerWrapper(auth.updateUserPassword)
+);
+
+router.get(
+  "/verify/:verificationToken",
+  validateParams(verifyUserSchema("verificationToken")),
+  controllerWrapper(auth.verifyUserViaEmail)
+);
+
+router.post(
+  "/verify",
+  validateBody(verifyUserSchema("email")),
+  controllerWrapper(auth.verifyUserViaEmail)
 );
 
 module.exports = router;
