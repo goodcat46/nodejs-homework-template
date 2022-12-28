@@ -9,6 +9,7 @@ const CURRENT_USER = "Поточнинй користувач";
 const USER_VERIFY_SUCCESS = "Верифікація пройшла успішно.";
 const USER_VERIFY_ERROR = "Верифікація пройшла невдало";
 const USER_VERIFIED = "Користувача уже верифіковано";
+const REPEAT_VERIFY = "Будь ласка повторіть верифікацію";
 
 module.exports = {
   USER_ALLREADY_EXIST,
@@ -22,4 +23,5 @@ module.exports = {
   USER_VERIFY_SUCCESS,
   USER_VERIFY_ERROR,
   USER_VERIFIED,
+  REPEAT_VERIFY,
 };

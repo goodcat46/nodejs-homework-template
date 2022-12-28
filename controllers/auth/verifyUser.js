@@ -4,6 +4,7 @@ const {
   USER_VERIFY_SUCCESS,
   USER_VERIFY_ERROR,
   USER_VERIFIED,
+  REPEAT_VERIFY,
 } = require("./authConstants");
 
 const {
@@ -41,30 +42,29 @@ async function verifyUserViaEmail(req, res, next) {
     if (!user) {
       throw createError({ status: 404 });
     }
+    console.log(user);
     if (user.verify) {
       res.status(201).json({
         status: 201,
+        data: user,
         message: USER_VERIFIED,
       });
       return;
     }
     if (user.verificationToken) {
       const emailOptions = {
-        from: "testerovych@meta.ua",
-        // to: `${user.email}`,
         to: "goodcat1994@gmail.com",
         subject: "Nodemailer test",
-        text: ` "Привіт. Ми тестуємо надсилання листів!", Посилання для підтвердження реєстрації: http://localhost:3000/api/users/verify/${user.verificationToken}`,
-        html: "<strong>Привіт. Ми тестуємо надсилання листів!</strong>",
+        text: `Привіт. Ми тестуємо надсилання листів!, Посилання для підтвердження реєстрації: http://localhost:3000/api/users/verify/${user.verificationToken}`,
+        html: `<strong>Привіт. ${REPEAT_VERIFY}!. Посилання для підтвердження реєстрації: http://localhost:3000/api/auth/verify/${user.verificationToken}</strong>`,
       };
 
       const afterEmailSendRes = await sendEmail(emailOptions);
 
-      console.log(afterEmailSendRes);
-
       res.status(201).json({
         status: 201,
-        message: USER_VERIFIED,
+        message: REPEAT_VERIFY,
+        afterEmailSendRes,
       });
     }
   }

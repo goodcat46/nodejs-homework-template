@@ -50,7 +50,7 @@ router.get(
 
 router.post(
   "/verify",
-  validateBody(updateUserSchema),
+  validateBody(verifyUserSchema("email")),
   controllerWrapper(auth.verifyUserViaEmail)
 );
 

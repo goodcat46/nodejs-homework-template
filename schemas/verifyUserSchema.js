@@ -1,4 +1,5 @@
 const Joi = require("joi");
+const emailRegExp = /[\w-]+@([\w-]+\.)+[\w-]+/;
 
 const verifyUserSchema = (param) => {
   if (param === "verificationToken") {
@@ -8,7 +9,7 @@ const verifyUserSchema = (param) => {
   }
   if (param === "email") {
     return Joi.object({
-      email: Joi.string().required(),
+      email: Joi.string().pattern(emailRegExp).required(),
     });
   }
 };

@@ -2,15 +2,15 @@ require("dotenv").config();
 
 const nodemailer = require("nodemailer");
 
-const { META_UA_PASSWORD } = process.env;
+const { UKR_NET_EMAIL, UKR_NET_PASSWORD } = process.env;
 
 const config = {
-  host: "mntp.meta.ua",
+  host: "smtp.ukr.net",
   port: 465,
   secure: true,
   auth: {
-    user: "testerovych@meta.ua",
-    pass: META_UA_PASSWORD,
+    user: UKR_NET_EMAIL,
+    pass: UKR_NET_PASSWORD,
   },
 };
 
@@ -20,8 +20,15 @@ async function sendEmail(emailOptions) {
   if (!emailOptions) {
     return;
   }
+  const msg = {
+    from: UKR_NET_EMAIL,
+    to: emailOptions?.to,
+    object: emailOptions?.object,
+    text: emailOptions?.text,
+    html: emailOptions?.html,
+  };
   try {
-    const res = transporter.sendMail(emailOptions);
+    const res = transporter.sendMail(msg);
 
     return res;
   } catch (error) {
