@@ -7,6 +7,7 @@ const contacts = require("../../controllers/contacts");
 const { validateBody, authenticate } = require("../../middlewares");
 
 const { newContactSchema } = require("../../schemas");
+
 const { updateContactSchema } = require("../../schemas");
 
 const { controllerWrapper } = require("../../helpers");
